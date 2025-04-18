@@ -1,0 +1,22 @@
+{
+  "name": "project-management-app",
+  "version": "1.0.0",
+  "description": "MERN Stack Project Management Application",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "server": "nodemon server/server.js",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "build": "cd client && npm install && npm run build",
+    "install-client": "cd client && npm install",
+    "install-server": "cd server && npm install",
+    "heroku-postbuild": "npm run install-client && npm run build"
+  },
+  "dependencies": {
+    "concurrently": "^7.6.0"
+  },
+  "engines": {
+    "node": "16.x"
+  }
+}
