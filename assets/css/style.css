@@ -412,3 +412,30 @@ footer {
     margin-top: 0.5rem;
   }
 }
+
+/* Progress Bar */
+.progress-bar-wrapper {
+  background-color: #e0e0e0;
+  border-radius: 20px;
+  overflow: hidden;
+  margin-top: 8px;
+  margin-bottom: 10px;
+  height: 20px;
+}
+
+.progress-bar {
+  height: 100%;
+  line-height: 20px;
+  color: white;
+  text-align: center;
+  background-color: #3059ff; /* default blue */
+  transition: width 0.4s ease-in-out;
+}
+
+.progress-bar.zero {
+  background-color: #dc3545; /* red */
+}
+
+.progress-bar.complete {
+  background-color: #28a745; /* green */
+}

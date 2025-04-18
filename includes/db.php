@@ -25,4 +25,26 @@ function sanitizeInput($data) {
     $data = htmlspecialchars($data);
     return $data;
 }
+
+// Getting project progress
+function getProjectProgress($project_id, $conn) {
+    $totalQuery = $conn->prepare("SELECT COUNT(*) FROM tasks WHERE project_id = ?");
+    $totalQuery->bind_param("i", $project_id);
+    $totalQuery->execute();
+    $totalQuery->bind_result($totalTasks);
+    $totalQuery->fetch();
+    $totalQuery->close();
+
+    $completedQuery = $conn->prepare("SELECT COUNT(*) FROM tasks WHERE project_id = ? AND status = 'Done'");
+    $completedQuery->bind_param("i", $project_id);
+    $completedQuery->execute();
+    $completedQuery->bind_result($completedTasks);
+    $completedQuery->fetch();
+    $completedQuery->close();
+
+    if ($totalTasks == 0) return 0; // Prevent division by zero
+
+    return round(($completedTasks / $totalTasks) * 100);
+}
+
 ?>

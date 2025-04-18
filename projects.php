@@ -90,9 +90,30 @@ include_once 'includes/header.php';
     <div class="project-list">
         <?php if ($projects->num_rows > 0): ?>
             <?php while ($project = $projects->fetch_assoc()): ?>
+                <?php
+                    // Calculate the project progress
+                    $progress = getProjectProgress($project['id'], $conn);
+                ?>
                 <div class="project-card">
                     <h3><?php echo $project['name']; ?></h3>
                     <p><?php echo $project['description']; ?></p>
+                    <?php
+                        // Conditional class for progress bar
+                        $progressClass = 'progress-bar';
+                        if ($progress == 0) {
+                            $progressClass .= ' zero'; // Red for 0% progress
+                        } elseif ($progress == 100) {
+                            $progressClass .= ' complete'; // Green for 100% progress
+                        }
+                    ?>
+
+                    <!-- Display Progress Bar -->
+                    <div class="progress-bar-wrapper">
+                        <div class="<?php echo $progressClass; ?>" style="width: <?php echo max($progress, 5); ?>%;">
+                            <?php echo $progress; ?>%
+                        </div>
+                    </div>
+
                     <div class="project-footer">
                         <span class="status-badge status-<?php echo strtolower(str_replace(' ', '-', $project['status'])); ?>">
                             <?php echo $project['status']; ?>
